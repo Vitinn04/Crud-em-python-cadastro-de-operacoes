@@ -1,0 +1,12 @@
+create database crudOp;
+use crudOp;
+
+create table operacoes(
+codigoOp int auto_increment primary key,
+nomeOp varchar(45),
+qtdPoliciais int,
+localOp varchar(45),
+dataOp date,
+descricaoOp varchar(500));
+
+select * from operacoes;
