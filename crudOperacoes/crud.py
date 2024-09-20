@@ -15,15 +15,13 @@ conexao = mysql.connector.connect(
 # criar um cursor (executa os comandos da conexão)
 cursor = conexao.cursor()
 
-escolha = int(input("Deseja rodar qual função?? [ 1 ] = Criar operação ou [ 2 ] = Ver operações: "))
-
 # função para dar o insert
 def criarOp():
-    nomeOp = str(input("Nome da Operação: "))
+    nomeOp = str(input("\nNome da Operação: "))
     qtdPoliciais = int(input("Quantidade de policias nescessários: "))
     localOp = str(input("Local da operação: "))
     dataOp = input("Data da operação: ")
-    descricaoOp = str(input("Descrição da operação: "))
+    descricaoOp = str(input("Descrição da operação: \n"))
 
     comando = f'INSERT INTO operacoes (nomeOp, qtdPoliciais, localOp, dataOp, descricaoOp) VALUES ("{nomeOp}", {qtdPoliciais}, "{localOp}", "{dataOp}", "{descricaoOp}");'
     cursor.execute(comando)
@@ -34,13 +32,30 @@ def verOp():
     comando = f'SELECT * FROM operacoes;'
     cursor.execute(comando)
     resultado = cursor.fetchall() # ler o banco de dados (Select)
-    print(resultado)
+    print(f"\nOs valores da tabela: {resultado}\n")
 
-# roda a função
-if escolha == 1:
-    criarOp()
-elif escolha == 2:
-    verOp()
+def alterarOp():
+    comando = f""
+
+def deletarOp():
+    comando = f""
+
+while True:
+    escolha = int(input("Deseja rodar qual função?? \n[ 1 ] = Criar operação \n[ 2 ] = Ver operações \n[ 3 ] = Alterar operação \n[ 4 ] = Deletar operação \n[ 5 ] = Sair \nDigite a sua escolha: "))
+    # roda a função
+    if escolha == 1:
+        criarOp()
+    elif escolha == 2:
+        verOp()
+    elif escolha == 3:
+        alterarOp()
+    elif escolha == 4:
+        deletarOp()
+    elif escolha == 5:
+        break
+    else:
+        escolha = int(input("Valor inválido!!! Deseja rodar qual função?? \n[ 1 ] = Criar operação \n[ 2 ] = Ver operações \n[ 3 ] = Alterar operação \n[ 4 ] = Deletar operação \n[ 5 ] = Sair \nDigite a sua escolha: "))
+
 
 # fecha a conexão
 cursor.close()
