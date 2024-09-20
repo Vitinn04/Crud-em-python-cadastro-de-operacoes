@@ -2,13 +2,13 @@
 
 import mysql.connector
 
-# Abra o Workbench e crie uma database e a tabela que vai usar
+# Abra o Workbench e crie uma database e a tabela que vai usar (estão na pasta "Banco de dados")
 
 # Crie a conexão com o banco criado no workbench
 conexao = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='25117195',
+    password='',
     database='crudOp',
 )
 
