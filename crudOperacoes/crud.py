@@ -8,7 +8,7 @@ import mysql.connector
 conexao = mysql.connector.connect(
     host='localhost',
     user='root',
-    password='',
+    password='25117195',
     database='crudOp',
 )
 
@@ -34,11 +34,45 @@ def verOp():
     resultado = cursor.fetchall() # ler o banco de dados (Select)
     print(f"\nOs valores da tabela: {resultado}\n")
 
+# função para dar update em alguma operação
 def alterarOp():
-    comando = f""
+    op = input("Qual operação deseja alterar (para ver as operações rode a função de ver operções)? EX: 1 ")
+    mudar = str(input("Qual campo deseja alterar na tabela [ 1 ] Nome da Operação, [ 2 ] Quantidade de policias, [ 3 ] Local da operação, [ 4 ] Data da operação, [ 5 ] Descrição da operação: "))
 
+    if mudar == "1":
+        mudar = "nomeOp"
+    elif mudar == "2":
+        mudar = "qtdPoliciais"
+    elif mudar == "3":
+        mudar = "localOp"
+    elif mudar == "4":
+        mudar = "dataOp"
+    elif mudar == "5":
+        mudar = "descricaoOp"
+    else:
+        print("Valor invalido tente novamente")
+        alterarOp()
+
+    alterado = input(f"Digite o/a {mudar}: ")
+
+    comando = f'UPDATE operacoes SET {mudar} = "{alterado}" WHERE codigoOp = {op};'
+    cursor.execute(comando)
+    conexao.commit()  # edita o banco de dados (Insert, Update, Delete)
+
+    comando = f'SELECT * FROM operacoes WHERE codigoOp = {op};'
+    cursor.execute(comando)
+    resultado = cursor.fetchall()  # ler o banco de dados (Select)
+    print(f"\nO valor alterado na tabela: {resultado}\n")
+
+# função para deletar alguma operação
 def deletarOp():
-    comando = f""
+    op = input("\nQual operação deseja deletar (para ver as operações rode a função de ver operções)? EX: 1 ")
+
+    comando = f'DELETE FROM operacoes WHERE codigoOp = {op};'
+    cursor.execute(comando)
+    conexao.commit()  # edita o banco de dados (Insert, Update, Delete)
+
+    print(f"\nA operação com o ID {op} foi deletada\n")
 
 while True:
     escolha = int(input("Deseja rodar qual função?? \n[ 1 ] = Criar operação \n[ 2 ] = Ver operações \n[ 3 ] = Alterar operação \n[ 4 ] = Deletar operação \n[ 5 ] = Sair \nDigite a sua escolha: "))
@@ -55,7 +89,6 @@ while True:
         break
     else:
         escolha = int(input("Valor inválido!!! Deseja rodar qual função?? \n[ 1 ] = Criar operação \n[ 2 ] = Ver operações \n[ 3 ] = Alterar operação \n[ 4 ] = Deletar operação \n[ 5 ] = Sair \nDigite a sua escolha: "))
-
 
 # fecha a conexão
 cursor.close()
